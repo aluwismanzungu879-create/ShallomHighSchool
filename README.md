@@ -247,7 +247,7 @@ Ideas for extending the system:
 
 Student Number: [C03261115]
 
-Course: Java Programming
+Course: Computer Programming
 
 Institution: [Reformed Church University]
 
