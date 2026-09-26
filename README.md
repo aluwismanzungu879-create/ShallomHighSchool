@@ -1,279 +1,96 @@
-# ShallomHighSchool
-A Java Swing school management system for Shallom High School with role-based dashboards, fees payment, and persistent storage.
-give me a README.md
-📄 README.md for Shallom High School Management System
-Here's your complete, ready-to-use README.md file. Just copy everything below, save it as README.md in your project folder, and don't forget to replace the [bracketed] placeholders.
+# Shallom High School Management System
 
-markdown
-# 🎓 Shallom High School Management System
+A browser-based Java web application for the day-to-day academic and administrative work of Shallom High School. The project uses Java Servlets and JSP on Apache Tomcat, with serialized Java objects for local persistent storage.
 
-A **Java Swing desktop application** for managing secondary school operations at **Shallom High School**.  
-Built as a Java Programming course project demonstrating OOP, Collections, Exception Handling,  
-File Serialization, Multithreading, and Java 8 features.
+> **Knowledge · Discipline · Excellence**
 
-> _"Knowledge • Discipline • Excellence"_
+## Features
 
----
+- Session login and role-aware navigation for students, teachers, ancillary staff, deputy headmaster, and headmaster.
+- Student pages for subjects, sports, fees, receipts, results, payment history, class teachers, and timetable.
+- Teacher mark entry with server-side validation and saved results.
+- Ancillary issue reporting and duty information.
+- Administrative school summaries, fee records, results, staff information, and reports.
+- School fees payments with reference numbers, serialized history, and printable receipts.
+- Java serialization persistence outside the public web folder, initialized demo accounts, and a lifecycle-managed report thread.
+- Responsive green and gold interface.
 
-## 📖 Table of Contents
+## Technologies and architecture
 
-- [About the Project](#-about-the-project)
-- [Features](#-features)
-- [Screenshots](#-screenshots)
-- [Demo Login Credentials](#-demo-login-credentials)
-- [How to Run](#-how-to-run)
-- [Project Structure](#-project-structure)
-- [Syllabus Topics Demonstrated](#-syllabus-topics-demonstrated)
-- [Built With](#-built-with)
-- [Colour Theme](#-colour-theme)
-- [Future Enhancements](#-future-enhancements)
-- [Author](#-author)
-- [License](#-license)
-- [Acknowledgements](#-acknowledgements)
+Java 8, Maven WAR, Servlet API 4, JSP, HTML5, CSS, JavaScript, Apache Tomcat 9, and Java object serialization. The application follows an MVC-style structure: models in `model`, controllers in `servlet`, JSP views under `WEB-INF/views`, business rules in `service`, persistence in `repository`, access control in `filter`, and application lifecycle setup in `listener`.
 
----
-
-## 📘 About the Project
-
-The **Shallom High School Management System** is a desktop application written in **Java** using the **Swing** GUI toolkit. It provides a secure, role-based platform for managing the daily academic and administrative operations of a secondary school.
-
-The system supports **five distinct user categories**, each with a dashboard tailored to their real-world duties:
-
-- 👨‍🎓 **Students**
-- 👨‍🏫 **Teachers**
-- 🧹 **Ancillary Staff**
-- 🎯 **Deputy Headmaster**
-- 👑 **Headmaster**
-
-Each user logs in with a unique **ID and password** and is then presented with a menu built specifically for their role.
-
----
-
-## ✨ Features
-
-### 🔐 Authentication & Security
-- Secure login screen with ID and password validation
-- Custom `InvalidLoginException` for clear error messages
-- Role-based access control — every user sees only their own menu
-
-### 👥 Role-Based Dashboards
-
-| Role | Menu Options |
-|------|--------------|
-| **Student** | View Subjects, Sports, Pay Fees, My Class Teacher, Timetable, Results |
-| **Teacher** | My Subjects, My Class, Enter Marks, Class Register, Sports Duties, Timetable |
-| **Ancillary Staff** | Duty Roster, Report Issue, View Notices, Grounds Status |
-| **Deputy Headmaster** | All Class Teachers, Subject Allocation, Discipline, Staff, Sports, Fee Reports |
-| **Headmaster** | School Overview, Class Teachers, Staff, Subjects, Sports, Fees, All Payments |
-
-### 📚 Academic Modules
-- **Subjects Offered** — 15 subjects displayed in a sorted grid
-- **Sports Offered** — 10 sports with practice day information
-- **Class Teachers Table** — All 10 classes (Form 1A → Upper 6) with assigned teachers
-
-### 💳 Financial Module
-- Complete **School Fees Payment** form
-- Multiple payment methods: **EcoCash, Bank Transfer, Cash, Swipe, ZIPIT**
-- Auto-generated reference numbers
-- Printable receipt dialog
-
-### 💾 Data Persistence
-- **Java Serialization** saves users and payments to `.dat` files
-- Data **survives app restarts**
-- **Auto-save daemon thread** writes a report every 30 seconds
-- Text export of payments to `payments_report.txt`
-
-### 🎨 User Interface
-- Custom-drawn circular **SHS logo**
-- Gradient green background with gold accents
-- Colour-coded header, sidebar, and cards
-- Clean, responsive layout built with `GridBagLayout` and `BoxLayout`
-
----
-
-## 🖼️ Screenshots
-
-> _Replace these placeholders with your own screenshots after running the app._
-
-### Login Screen
-![Login Screen](screenshots/login.png)
-
-### Student Dashboard
-![Student Dashboard](screenshots/student_dashboard.png)
-
-### Subjects Offered
-![Subjects](screenshots/subjects.png)
-
-### Class Teachers
-![Class Teachers](screenshots/class_teachers.png)
-
-### Fee Payment Form
-![Fee Payment](screenshots/fees.png)
-
-### Headmaster Dashboard
-![Headmaster](screenshots/headmaster.png)
-
----
-
-## 🔑 Demo Login Credentials
+## Roles and demo credentials
 
 | Role | Username | Password |
-|------|----------|----------|
+| --- | --- | --- |
 | Student | `student1` | `pass123` |
-| Student (2nd) | `student2` | `pass123` |
+| Student | `student2` | `pass123` |
 | Teacher | `teacher1` | `teach123` |
-| Teacher (2nd) | `teacher2` | `teach123` |
+| Teacher | `teacher2` | `teach123` |
 | Ancillary Staff | `ancil1` | `ancil123` |
-| Ancillary Staff (2nd) | `ancil2` | `ancil123` |
+| Ancillary Staff | `ancil2` | `ancil123` |
 | Deputy Headmaster | `deputy` | `dep123` |
 | Headmaster | `headmaster` | `head123` |
 
----
+Demo passwords are plain text for this academic assignment. Do not use these authentication practices in a production system.
 
-## 🚀 How to Run
+## Prerequisites and running
 
-### Prerequisites
+- JDK 8 or newer
+- Maven 3.6 or newer
+- Apache Tomcat 9 (Servlet 4 / `javax.servlet`)
 
-- **Java JDK 8 or higher** — [Download from Oracle](https://www.oracle.com/java/technologies/downloads/)
-- Any IDE (**IntelliJ IDEA**, **Eclipse**, **NetBeans**) **OR** the terminal
+Build from the project directory:
 
-Verify Java is installed by running:
+```sh
+mvn clean package
+```
 
-```bash
-java -version
-javac -version
-▶️ Option 1: Run from Terminal
-bash
-# 1. Navigate to the project folder
-cd ShallomHighSchool
+This creates `target/ShallomHighSchool.war`. Copy it to Tomcat's `webapps` directory and start Tomcat. On Windows, for example:
 
-# 2. Compile the source file
-javac ShallomHighSchool.java
+```powershell
+Copy-Item target\ShallomHighSchool.war C:\path\to\apache-tomcat-9\webapps\
+C:\path\to\apache-tomcat-9\bin\startup.bat
+```
 
-# 3. Run the application
-java ShallomHighSchool
-The login window will appear. Use any credential from the table above.
+Open **http://localhost:8080/ShallomHighSchool/**. The application creates its data directory at `${catalina.base}/ShallomHighSchool-data` by default. Set the Java system property `-Dshallom.data=C:\path\to\data` to choose another directory. The `.dat` files and generated payment report remain outside the deployed web application.
 
-▶️ Option 2: Run in IntelliJ IDEA
-Open IntelliJ IDEA
+## Project structure
 
-Click File → Open and select the ShallomHighSchool folder
+```text
+pom.xml
+src/main/java/zw/shallom/{model,servlet,service,repository,exception,filter,listener}/
+src/main/webapp/index.jsp
+src/main/webapp/WEB-INF/{web.xml,views}/
+src/main/webapp/assets/{style.css,app.js}
+```
 
-Locate ShallomHighSchool.java in the Project panel
+## Screenshots
 
-Right-click it → Run 'ShallomHighSchool.main()'
+Add captures from a running deployment here, for example `screenshots/login.png`, `screenshots/student-dashboard.png`, and `screenshots/headmaster-dashboard.png`.
 
-The login screen will appear
+## Java concepts demonstrated
 
-▶️ Option 3: Run in VS Code
-Install the Extension Pack for Java
+Encapsulation and model objects, enums, arrays and 2D arrays, collections and generics, streams, lambdas and method references, checked custom exceptions, try-with-resources, serialization, synchronized file access, background threading, and MVC separation.
 
-Open the ShallomHighSchool folder
+## Troubleshooting
 
-Open ShallomHighSchool.java
+- Confirm Tomcat 9 is running and deploy the WAR under the `ShallomHighSchool` name.
+- Check Tomcat logs if JSP compilation or deployment fails.
+- Use JDK 8+ and Maven 3.6+; Maven needs access to download dependencies on the first build.
+- Confirm the Tomcat process can write to the configured data directory.
+- This uses the `javax.servlet` namespace and targets Tomcat 9. Tomcat 10 requires Jakarta namespace migration.
 
-Click the ▶ Run button at the top right
+## Future improvements
 
-🗂️ Project Structure
-text
-ShallomHighSchool/
-│
-├── ShallomHighSchool.java       # Main source file (all classes)
-├── README.md                    # This file
-│
-├── users.dat                    # Auto-generated (user data)
-├── payments.dat                 # Auto-generated (payment records)
-├── payments_report.txt          # Auto-generated (text report)
-│
-└── screenshots/                 # Screenshots for this README
-    ├── login.png
-    ├── student_dashboard.png
-    ├── subjects.png
-    ├── class_teachers.png
-    ├── fees.png
-    └── headmaster.png
-Note: The .dat and .txt files are created automatically on first run. You do not need to commit them to GitHub.
+Production password hashing and account administration, fuller attendance and timetable workflows, exportable reports, and a relational database when the assignment permits one.
 
-🧠 Syllabus Topics Demonstrated
-This project was built to demonstrate the full range of Java Programming course topics:
+## Author
 
-Topic	Where Used
-Arrays (1D & 2D)	SUBJECTS[], SPORTS[], Object[][] for JTable
-Sorting & Searching	Arrays.sort(), Arrays.binarySearch() in findByUsername()
-Collections (List/Set/Map)	HashMap, LinkedHashMap, ArrayList
-Iterators & Generics	Menu iteration with Iterator<String>, typed collections
-Custom Exceptions	InvalidLoginException, PaymentException, DuplicateUserException
-Try-Catch-Finally	Login flow, file I/O, payment validation
-Throw/Throws	authenticate() declares throws InvalidLoginException
-File I/O Streams	ObjectOutputStream, ObjectInputStream, PrintWriter
-Serialization	User and Payment implement Serializable
-Persistence	.dat files survive application restarts
-Multithreading	AutoSaveThread daemon saves every 30 seconds
-Lambdas	Event listeners like e -> doLogin()
-Method References	Comparator.comparingLong(Payment::getTimestamp)
-Streams	payments.stream().sorted(...).forEach(...)
-Design Patterns	Singleton (UserDatabase), MVC, Factory (role-based menu)
-🛠️ Built With
-Java SE 8+
-
-Java Swing — GUI toolkit
-
-Java Serialization — data persistence
-
-No external libraries — pure JDK
-
-🎨 Colour Theme
-The application uses the official Shallom High School colours:
-
-Colour	Hex Code	Usage
-🟢 Deep Green	#006633	Primary (headers, buttons, borders)
-🟡 Gold	#FFC107	Accent (logo, motto, borders)
-⚪ Light Green	#F0FFF4	Content backgrounds
-⚫ Dark Green	#142819	Sidebar menu
-⚪ White	#FFFFFF	Cards, login panel
-🔮 Future Enhancements
-Ideas for extending the system:
-
-□ Migrate from file storage to MySQL or SQLite database
-□ Add PDF report card generation
-□ Add SMS/email notifications for fee reminders
-□ Add attendance tracking module
-□ Build a mobile companion app using JavaFX or Android
-□ Add exam scheduling and results processing
-□ Add library management module
-□ Add timetable generator with conflict detection
-👤 Author
-[Aluwis Manzungu]
-
-Student Number: [C03261115]
-
-Course: Computer Programming
-
-Institution: [Reformed Church University]
-
-Email: [aluwismanzungu879@gmail.com]
-
-📄 License
-This project is submitted for academic purposes as a Java Programming course assignment.
-
-© [2026] [Aluwis Manzungu] — Shallom High School Management System.
-
-🙏 Acknowledgements
-Lecturer: [MR Fanyana]
-
-Shallom High School — fictional school used for this assignment
-
-Oracle Java Documentation — docs.oracle.com/javase
-
-Stack Overflow Community — for Java Swing reference solutions
-
-⭐ Support
-If this project helped you or inspired you, please consider giving it a ⭐ on GitHub!
-
-<div align="center">
-Shallom High School Management System
-"Knowledge • Discipline • Excellence"
-
-Made with ❤️ in Java
-
-</div> ```
+**Aluwis Manzungu**  
+Student Number: C03261115  
+Course: Computer Programming  
+Institution: Reformed Church University  
+Email: aluwismanzungu879@gmail.com  
+Lecturer: MR Fanyana  
+Year: 2026

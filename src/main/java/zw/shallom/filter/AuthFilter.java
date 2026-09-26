@@ -1,0 +1,6 @@
+package zw.shallom.filter;
+import javax.servlet.*;import javax.servlet.http.*;import java.io.IOException;import zw.shallom.model.*;
+public class AuthFilter implements Filter {
+ public void doFilter(ServletRequest req,ServletResponse res,FilterChain chain)throws IOException,ServletException{HttpServletRequest r=(HttpServletRequest)req;HttpServletResponse s=(HttpServletResponse)res;String path=r.getRequestURI().substring(r.getContextPath().length());if(path.equals("/login")||path.equals("/")||path.startsWith("/assets/")){chain.doFilter(req,res);return;}HttpSession session=r.getSession(false);User u=session==null?null:(User)session.getAttribute("user");if(u==null){s.sendRedirect(r.getContextPath()+"/login");return;}String area=path.startsWith("/app/")?path.substring(5).split("/")[0]:"";boolean allowed=true;if(area.equals("marks"))allowed=u.getRole()==Role.TEACHER;if(area.equals("issues"))allowed=u.getRole()==Role.ANCILLARY;if(area.equals("payments"))allowed=u.getRole()==Role.STUDENT||u.getRole()==Role.HEADMASTER||u.getRole()==Role.DEPUTY;if(area.equals("reports"))allowed=u.getRole()==Role.HEADMASTER||u.getRole()==Role.DEPUTY;if(area.equals("fees"))allowed=u.getRole()==Role.STUDENT;if(!allowed){s.sendError(403,"Your role cannot access this page.");return;}chain.doFilter(req,res);}
+ public void init(FilterConfig c){}public void destroy(){}
+}
